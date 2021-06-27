@@ -1,5 +1,11 @@
+
+//parent element to store cards
 const taskContainer = document.querySelector(".task__container");
 console.log(taskContainer);
+
+//global store using array
+const globalStore = [];
+
 
 const newCard = ({id, imageUrl, taskTitle, taskType, taskDescription,}) => 
 ` <div class="col-md-6 col-lg-4" id=${id}>
@@ -19,7 +25,28 @@ const newCard = ({id, imageUrl, taskTitle, taskType, taskDescription,}) =>
     <button type="button" class="btn btn-outline-primary float-end">Open Task</button>
   </div>
 </div>
-</div>`
+</div>`;
+
+//function to get the data back from local storage...
+const loadInitialTaskCards = () => {
+    
+    
+    // access local storage
+const getInitialData = localStorage.getItem("tasky");
+if (!getInitialData) return;
+
+    // converty stringified object to object
+const {cards} = JSON.parse(getInitialData);
+
+
+    // map around the array to generate html card and inject it to dom
+cards.map((cardObject) => {
+    const createNewCard = newCard(cardObject);
+    taskContainer.insertAdjacentHTML("beforeend", createNewCard);
+    globalStore.push(cardObject);
+});
+
+};
 
 
 const saveChanges = () => {
@@ -35,6 +62,16 @@ const saveChanges = () => {
     const createNewCard = newCard(taskData);
 
     taskContainer.insertAdjacentHTML("beforeend", createNewCard);
+
+    globalStore.push(taskData);
+    console.log(globalStore);
+
+
+// now access local storage with API (application programming interface)  
+// local storage -> interface -> programming
+ 
+localStorage.setItem("tasky", JSON.stringify({cards: globalStore}));
+
 };
 
 
@@ -48,7 +85,7 @@ const saveChanges = () => {
 
 /*   issue
 1 the modal was not closing after adding mew card      -------resolved using bootstrap code "data-bs-dismiss"modal""
-2 the cards were deleted after refreshing
+2 the cards were deleted after refreshing   -> store in local storage of browser - its 5-mb space only
 */
 
 /* featutes
