@@ -36,3 +36,23 @@ const saveChanges = () => {
 
     taskContainer.insertAdjacentHTML("beforeend", createNewCard);
 };
+
+
+
+
+
+
+
+
+
+
+/*   issue
+1 the modal was not closing after adding mew card      -------resolved using bootstrap code "data-bs-dismiss"modal""
+2 the cards were deleted after refreshing
+*/
+
+/* featutes
+1 delete modal feature
+2 open task
+3 edit task 
+*/
