@@ -1,7 +1,7 @@
 
 //parent element to store cards
-const taskContainer = document.querySelector(".task__container");
-console.log(taskContainer);
+const taskContainer = document.querySelector(" .task__container");
+
 
 //global store using array
 let globalStore = [];
@@ -11,19 +11,21 @@ const newCard = ({id, imageUrl, taskTitle, taskType, taskDescription,}) =>
 ` <div class="col-md-6 col-lg-4" id=${id}>
 <div class="card text-center">
   <div class="card-header d-flex justify-content-end gap-2">
-    <button type="button" class="btn btn-outline-success"><i class="fas fa-pencil-alt"></i></button>
-<button type="button" class="btn btn-outline-danger" id=${id} onclick="deleteCard.apply(this, arguments)">
-<i class="fas fa-trash-alt" id=${id} onclick="deleteCard.apply(this, arguments)></i></button>
+  <button type="button" id=${id} class="btn btn-outline-success" onclick="editCard.apply(this, arguments)">
+  <i class="fas fa-pencil-alt" id=${id} onclick="editCard.apply(this, arguments)" ></i>
+</button>
+<button type="button" id=${id} class="btn btn-outline-danger" onclick="deleteCard.apply(this, arguments)">
+  <i class="fas fa-trash-alt" id=${id} onclick="deleteCard.apply(this, arguments)"></i>
+</button>
   </div>
-  <img src=${imageUrl} class="card-img-top" alt="card image">
+  <img src=${imageUrl} class="card-img-top" alt="..." />
   <div class="card-body">
     <h5 class="card-title">${taskTitle}</h5>
     <p class="card-text">${taskDescription}</p>
-    <h5><span class="badge bg-primary">${taskType}</span></h5>
-
+    <span class="badge bg-primary">${taskType}</span>
   </div>
   <div class="card-footer text-muted">
-    <button type="button" class="btn btn-outline-primary float-end">Open Task</button>
+    <button type="button" id=${id} class="btn btn-outline-primary float-end">Open Task</button>
   </div>
 </div>
 </div>`;
@@ -49,7 +51,7 @@ cards.map((cardObject) => {
 
 };
 
-const updateLocalStorage = (data) => localStorage.setItem("tasky", JSON.stringify({cards: globalStore}));
+const updateLocalStorage = () => localStorage.setItem("tasky", JSON.stringify({cards: globalStore}));
 
 
 const saveChanges = () => {
@@ -62,13 +64,16 @@ const saveChanges = () => {
 
     };
 
+
+    //html code
+
     const createNewCard = newCard(taskData);
 
     taskContainer.insertAdjacentHTML("beforeend", createNewCard);
 
     globalStore.push(taskData);
-    console.log(globalStore);
 
+    //add to localstorage
 
 // now access local storage with API (application programming interface)  
 // local storage -> interface -> programming
@@ -92,15 +97,20 @@ const tagname = event.target.tagName;    //Buttons
 
     //access dom to remove 
 if(tagname === "BUTTON"){
-    return taskContainer.removeChild(
-        event.target.parentnode.parentnode.parentnode
-    );
-};
-return taskContainer.removeChild(
-    event.target.parentnode.parentnode.parentnode.parentnode
-);
 
+    //task_container
+
+    return taskContainer.removeChild(
+        event.target.parentNode.parentNode.parentNode
+    );
+}
+//task container
+return taskContainer.removeChild(
+    event.target.parentNode.parentNode.parentNode.parentNode
+);
 };
+
+
 
 
 
